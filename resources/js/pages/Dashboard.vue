@@ -36,18 +36,21 @@ const stats = [
         value: props.stats.totalPrograms,
         description: 'Program latihan tersimpan',
         icon: '▤',
+        href: '/workout-programs',
     },
     {
         label: 'Total Exercises',
         value: props.stats.totalExercises,
         description: 'Exercise tercatat',
         icon: '↗',
+        href: '/workout-programs',
     },
     {
         label: 'Weekly Sets',
         value: props.stats.weeklySets,
         description: 'Set latihan minggu ini',
         icon: '◫',
+        href: '/workout-programs',
     },
 ];
 
@@ -142,10 +145,11 @@ const quickActions = [
             </div>
 
             <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                <article
+                <Link
                     v-for="stat in stats"
                     :key="stat.label"
-                    class="rounded-2xl border border-white/10 bg-[#111611] p-5"
+                    :href="stat.href"
+                    class="block rounded-2xl border border-white/10 bg-[#111611] p-5 transition hover:border-lime-300/40 hover:bg-[#182018]"
                 >
                     <div class="flex items-start justify-between">
                         <div>
@@ -170,7 +174,7 @@ const quickActions = [
                     <p class="mt-4 text-xs text-gray-500">
                         {{ stat.description }}
                     </p>
-                </article>
+                </Link>
             </div>
         </section>
 
@@ -185,39 +189,81 @@ const quickActions = [
                 </p>
             </div>
 
+            
             <div class="grid gap-4 lg:grid-cols-3">
-                <article
-                    v-for="action in quickActions"
-                    :key="action.number"
+                <Link
+                    href="/workout-programs/create"
                     class="group rounded-2xl border border-white/10 bg-[#111611] p-5 transition hover:border-lime-300/30"
                 >
                     <div class="flex items-center justify-between">
-                        <div
-                            class="flex h-12 w-12 items-center justify-center rounded-xl bg-lime-300/10 text-2xl font-bold text-lime-300"
-                        >
-                            {{ action.icon }}
+                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-lime-300/10 text-2xl font-bold text-lime-300">
+                            +
                         </div>
-
-                        <span class="text-xs font-semibold text-gray-600">
-                            {{ action.number }}
-                        </span>
+                        <span class="text-xs font-semibold text-gray-600">01</span>
                     </div>
 
                     <h3 class="mt-5 text-base font-bold text-white">
-                        {{ action.title }}
+                        Create Workout Program
                     </h3>
 
                     <p class="mt-2 min-h-12 text-sm leading-6 text-gray-400">
-                        {{ action.description }}
+                        Buat program latihan baru dan tentukan jadwal latihanmu.
                     </p>
 
-                    <div
-                        class="mt-5 border-t border-white/10 pt-4 text-xs font-semibold text-lime-300"
-                    >
-                        {{ action.status }}
+                    <div class="mt-5 border-t border-white/10 pt-4 text-xs font-semibold text-lime-300">
+                        Available now →
+                    </div>
+                </Link>
+
+                
+                <Link
+                    href="/muscle-balance"
+                    class="group rounded-2xl border border-white/10 bg-[#111611] p-5 transition hover:border-lime-300/30"
+                >
+                    <div class="flex items-center justify-between">
+                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-lime-300/10 text-2xl font-bold text-lime-300">
+                            ◫
+                        </div>
+
+                        <span class="text-xs font-semibold text-gray-600">02</span>
+                    </div>
+
+                    <h3 class="mt-5 text-base font-bold text-white">
+                        Analyze Muscle Balance
+                    </h3>
+
+                    <p class="mt-2 min-h-12 text-sm leading-6 text-gray-400">
+                        Evaluasi distribusi jumlah set pada setiap kelompok otot.
+                    </p>
+
+                    <div class="mt-5 border-t border-white/10 pt-4 text-xs font-semibold text-lime-300">
+                        Available now →
+                    </div>
+                </Link>
+
+
+                <article class="rounded-2xl border border-white/10 bg-[#111611] p-5 opacity-70">
+                    <div class="flex items-center justify-between">
+                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-lime-300/10 text-2xl font-bold text-lime-300">
+                            ✳
+                        </div>
+                        <span class="text-xs font-semibold text-gray-600">03</span>
+                    </div>
+
+                    <h3 class="mt-5 text-base font-bold text-white">
+                        AI Exercise Analysis
+                    </h3>
+
+                    <p class="mt-2 min-h-12 text-sm leading-6 text-gray-400">
+                        Unggah foto latihan untuk mendapatkan analisis teknik dasar.
+                    </p>
+
+                    <div class="mt-5 border-t border-white/10 pt-4 text-xs font-semibold text-lime-300">
+                        Coming next
                     </div>
                 </article>
             </div>
+
         </section>
 
         <!-- Programs -->
@@ -245,10 +291,11 @@ const quickActions = [
                 v-if="programs.length > 0"
                 class="grid gap-4 lg:grid-cols-2"
             >
-                <article
+                <Link
                     v-for="program in programs"
                     :key="program.id"
-                    class="rounded-2xl border border-white/10 bg-[#111611] p-6"
+                    :href="`/workout-programs/${program.id}/exercises`"
+                    class="block rounded-2xl border border-white/10 bg-[#111611] p-6 transition hover:border-lime-300/40 hover:bg-[#182018]"
                 >
                     <h3 class="text-lg font-bold text-white">
                         {{ program.name }}
@@ -278,7 +325,7 @@ const quickActions = [
                             }}
                         </span>
                     </div>
-                </article>
+                </Link>
             </section>
 
             <section

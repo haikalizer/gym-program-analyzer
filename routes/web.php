@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MuscleBalanceController;
 use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
@@ -60,6 +61,21 @@ Route::middleware(['auth'])->group(function () {
         '/workout-programs/{workoutProgram}/exercises/{exercise}',
         [ExerciseController::class, 'destroy']
     )->name('workout-programs.exercises.destroy');
+
+    Route::delete('/workout-programs/{workoutProgram}', [
+        WorkoutProgramController::class,
+        'destroy',
+    ])->name('workout-programs.destroy');
+
+    Route::get('/muscle-balance', [
+        MuscleBalanceController::class,
+        'index',
+    ])->name('muscle-balance.index');
+
+    Route::get('/muscle-balance/{workoutProgram}', [
+        MuscleBalanceController::class,
+        'show',
+    ])->name('muscle-balance.show');
 
     
 });

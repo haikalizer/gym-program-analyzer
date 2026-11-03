@@ -40,4 +40,23 @@ class WorkoutProgramController extends Controller
         return to_route('workout-programs.index')
             ->with('success', 'Program latihan berhasil dibuat.');
     }
+
+
+    public function destroy(WorkoutProgram $workoutProgram): RedirectResponse
+    {
+        // Pastikan program milik pengguna yang sedang login
+        abort_unless(
+            $workoutProgram->user_id === auth()->id(),
+            403
+        );
+
+        // Hapus semua exercise dalam program
+        $workoutProgram->exercises()->delete();
+
+        // Hapus program latihan
+        $workoutProgram->delete();
+
+        return to_route('workout-programs.index')
+            ->with('success', 'Program latihan berhasil dihapus.');
+    }
 }
